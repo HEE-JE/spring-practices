@@ -28,7 +28,7 @@ public class GuestbookRepository {
 			// 4. Mapping(bind)
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getMessage());
+			pstmt.setString(3, vo.getContent());
 
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -87,6 +87,13 @@ public class GuestbookRepository {
 		return result;
 	}
 
+	public void delete(Long no, String password) {
+		GuestbookVo vo = new GuestbookVo();
+		vo.setNo(no);
+		vo.setPassword(password);
+		delete(vo);
+	}
+
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> result = new ArrayList<GuestbookVo>();
 		Connection connection = null;
@@ -96,7 +103,7 @@ public class GuestbookRepository {
 			connection = getConnection();
 
 			// 3. SQL 준비
-			String sql = "select no, name, date_format(reg_date, '%Y-%m-%d %r'), message from guestbook order by no desc";
+			String sql = "select no, name, date_format(reg_date, '%Y-%m-%d %r'), content from guestbook order by no desc";
 			pstmt = connection.prepareStatement(sql);
 
 			// 4. Parameter Mapping
@@ -110,7 +117,7 @@ public class GuestbookRepository {
 				vo.setNo(rs.getLong(1));
 				vo.setName(rs.getString(2));
 				vo.setRegDate(rs.getString(3));
-				vo.setMessage(rs.getString(4));
+				vo.setContent(rs.getString(4));
 
 				result.add(vo);
 			}
@@ -149,4 +156,5 @@ public class GuestbookRepository {
 		}
 		return connection;
 	}
+
 }

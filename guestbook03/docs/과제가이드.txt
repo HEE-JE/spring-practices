@@ -15,5 +15,5 @@ POST /guestbook/delete/10
 redirect:/
 
 4) add(GuestbookVo vo)
-POST /guestbook
+POST /guestbook/add
 redirect:/

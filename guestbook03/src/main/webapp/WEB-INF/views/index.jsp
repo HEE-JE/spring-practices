@@ -1,9 +1,10 @@
-<%@page import="com.douzone.guestbook.vo.GuestbookVo"%>
-<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
+pageContext.setAttribute("newLine", "\n");
 %>
 <html>
 <head>
@@ -11,7 +12,7 @@ List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
 <title>방명록</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/gb?a=add" method="post">
+	<form action="${pageContext.request.contextPath }/add" method="POST">
 		<table border=1 width=500>
 			<tr>
 				<td>이름</td>
@@ -20,7 +21,7 @@ List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
 				<td><input type="password" name="password"></td>
 			</tr>
 			<tr>
-				<td colspan=4><textarea name="message" cols=60 rows=5></textarea></td>
+				<td colspan=4><textarea name="content" cols=60 rows=5></textarea></td>
 			</tr>
 			<tr>
 				<td colspan=4 align=right><input type="submit" VALUE="등록"></td>
@@ -29,26 +30,20 @@ List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
 	</form>
 	<br />
 
-	<%
-	int count = 0;
-	for (GuestbookVo vo : list) {
-	%>
-	<table width=510 border=1>
-		<tr>
-			<td>[<%=list.size() - count++%>]
-			</td>
-			<td><%=vo.getName()%></td>
-			<td><%=vo.getRegDate()%></td>
-			<td><a
-				href="<%=request.getContextPath()%>/gb?a=deleteform&no=<%=vo.getNo()%>&check=true">삭제</a></td>
-		</tr>
-		<tr>
-			<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>")%></td>
-		</tr>
-	</table>
-	<br />
-	<%
-	}
-	%>
+	<c:forEach items='${list }' var='vo' varStatus='status'>
+		<table width=510 border=1>
+			<tr>
+				<td>[${fn:length(list) - status.index }]</td>
+				<td>${vo.name }</td>
+				<td>${vo.regDate }</td>
+				<td><a
+					href="${pageContext.request.contextPath }/delete/${vo.no }">삭제</a></td>
+			</tr>
+			<tr>
+				<td colspan=4>${fn:replace(vo.content, newLine, "<br />") }</td>
+			</tr>
+		</table>
+		<br />
+	</c:forEach>
 </body>
 </html>
