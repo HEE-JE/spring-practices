@@ -3,8 +3,6 @@ package com.douzone.container.config.soundsystem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Rule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.douzone.container.soundsystem.CDPlayer;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:com/douzone/container/config/soundsystem/CDPlayerConfig.xml")
-public class CDPlayerXmlConfigTest {
+@ContextConfiguration(classes = { CDPlayerConfig.class })
+public class CDPlayerJavaConfigTest {
 	// @Rule
 	// public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
 
