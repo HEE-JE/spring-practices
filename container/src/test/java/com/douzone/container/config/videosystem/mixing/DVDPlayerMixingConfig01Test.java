@@ -2,6 +2,7 @@ package com.douzone.container.config.videosystem.mixing;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +16,7 @@ public class DVDPlayerMixingConfig01Test {
 	@Autowired
 	private DVDPlayer dvdPlayer;
 
+	@Test
 	public void testPlayerNotNull() {
 		assertNotNull(dvdPlayer);
 	}
